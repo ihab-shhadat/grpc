@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+
+message Query{
+  string id = 1;
+}
+
+message Money {
+  float amount = 1;
+  string currency = 2;
+}
+
+message Category{
+  string id = 1;
+  string name = 2;
+
+}
+
+message Employee {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+
+}
+message Variation{
+  string id = 1;
+  string name = 2;
+  string pricing_type = 3;
+  Money price_money = 4;
+
+}
+message Modifiers{
+  string id = 1;
+  string name = 2;
+  int64 quantity = 3;
+  Money applied_money = 4;
+
+}
+
+message Tender {
+  string type = 1;
+  string name = 2;
+  Money total_money = 3;
+
+}
+
+message Tax{
+  string id = 1;
+  string name = 2;
+  float rate = 3;
+  string inclusion_type = 4;
+  bool is_custom_amount = 5;
+  Money applied_money = 6;
+}
+
+message Item{
+  string id = 1;
+  string name = 2;
+  int32 quantity = 3;
+  Money total_money = 4;
+  Money single_quantity_money = 5;
+  Money gross_sales_money = 6;
+  Money discount_money = 7;
+  Money net_sales_money = 8;
+  Category category = 9;
+  Variation variation = 10;
+  repeated Tax taxes = 11;
+  Money discounts = 12;
+  repeated Modifiers modifiers = 13;
+
+}
+
+message Transaction {
+  string _id = 1;
+  string business_id = 2;
+  string location_id = 3;
+  string transaction_id = 4;
+  string receipt_id = 5;
+  string serial_number = 6;
+  string dining_option = 7;
+  string creation_time = 8;
+
+  Money discount_money = 9;
+  Money additive_tax_money = 10;
+  Money inclusive_tax_money = 11;
+  Money refunded_money = 12;
+  Money tax_money = 13;
+  Money tip_money = 14;
+  Money total_collected_money = 15;
+  Employee creator = 16;
+  Tender tender = 17;
+  repeated Tax taxes = 18;
+  repeated Item itemization = 19;
+}
+
+service TransactionService {
+  rpc GetTransaction(Query) returns (Transaction) {}
+}
